@@ -1,0 +1,40 @@
+name: its-my-life
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: its-my-life-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/18/docker
+
+    networks:
+      - app_network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+
+volumes:
+  postgres_data:
+    name: its-my-life-postgres-data
+
+
+networks:
+  app_network:
+    name: its-my-life-network
+    driver: bridge
