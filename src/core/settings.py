@@ -9,12 +9,16 @@ class Settings(BaseSettings):
     )
 
     log_lvl: str
-
     postgres_host: str
     postgres_db: str
     postgres_user: str
     postgres_password: SecretStr
     postgres_port: int
+
+    telegram_token: SecretStr
+    request_from_telegram_secret: SecretStr
+    webhook_url: str
+    telegram_user_id: int
 
     @property
     def postgres_url(self) -> str:
