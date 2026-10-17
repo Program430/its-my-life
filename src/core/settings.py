@@ -8,17 +8,17 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
 
-    log_lvl: str
+    log_lvl: str = "INFO" 
     postgres_host: str
     postgres_db: str
     postgres_user: str
     postgres_password: SecretStr
     postgres_port: int
 
-    telegram_token: SecretStr
-    request_from_telegram_secret: SecretStr
-    webhook_url: str
-    telegram_user_id: int
+    telegram_token: SecretStr = SecretStr("dummy_token")
+    request_from_telegram_secret: SecretStr = SecretStr("dummy_secret")
+    webhook_url: str = "https://dummy.url"
+    telegram_user_id: int = 0
 
     @property
     def postgres_url(self) -> str:
